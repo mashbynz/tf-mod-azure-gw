@@ -34,7 +34,7 @@ resource "azurerm_public_ip" "default" {
 }
 
 resource "azurerm_virtual_network_gateway" "default" {
-  name                = module.vpn_gateway_label.id
+  name                = module.vgw_label.id
   location            = var.region
   resource_group_name = azurerm_public_ip.default.resource_group_name
 

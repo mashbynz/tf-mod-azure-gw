@@ -22,3 +22,8 @@ module "ipconfig_label" {
   delimiter          = "-"
   additional_tag_map = {} /* Additional attributes (e.g. 1) */
 }
+
+module "vnet" {
+  source  = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
+  context = var.context
+}
