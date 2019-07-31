@@ -1,7 +1,7 @@
 
-module "vnet" {
-  source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
-}
+# module "vnet" {
+#   source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
+# }
 
 
 # VPN Gateway
@@ -26,11 +26,11 @@ module "vnet" {
 # }
 
 resource "azurerm_public_ip" "default" {
-  name     = module.vgw_pip_label.id
-  location = var.region
-  #   resource_group_name = "prod-sharedservices-rg"
-  resource_group_name = module.vnet.ss_rg_name
-  allocation_method   = var.vpngw_allocation_method
+  name                = module.vgw_pip_label.id
+  location            = var.region
+  resource_group_name = "prod-sharedservices-rg"
+  #   resource_group_name = module.vnet.ss_rg_name
+  allocation_method = var.vpngw_allocation_method
 }
 
 # resource "azurerm_virtual_network_gateway" "default" {
