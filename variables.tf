@@ -12,12 +12,6 @@ variable "region" {
 GATEWAY Module Variables - https://github.com/mashbynz/tf-mod-azure-gw
 *****/
 
-variable "vnet_name" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
 variable "vpngw_allocation_method" {
   type        = string
   description = ""
@@ -49,9 +43,9 @@ variable "vpngw_private_alloc" {
 }
 
 variable "vpngw_client_address" {
-  type        = string
+  type        = list(string)
   description = ""
-  default     = ""
+  default     = []
 }
 
 /*****
