@@ -1,7 +1,7 @@
 
-# module "vnet" {
-#   source                     = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
-# }
+module "vnet" {
+  source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
+}
 
 
 # VPN Gateway
