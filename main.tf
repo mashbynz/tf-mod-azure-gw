@@ -1,3 +1,9 @@
+
+module "vnet" {
+  source                     = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
+}
+
+
 # VPN Gateway
 
 # resource "azurerm_resource_group" "test" {
@@ -20,9 +26,9 @@
 # }
 
 resource "azurerm_public_ip" "vpnPIP" {
-  name                = module.vpn_gateway_pip_label.id
+  name                = module.vgw_pip_label.id
   location            = var.region
-  resource_group_name = module.vnet.ss_rg_name.id
+  resource_group_name = module.vnet.ss_rg_name
 
   allocation_method = "Dynamic"
 }
