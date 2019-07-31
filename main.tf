@@ -25,38 +25,38 @@
 #   address_prefix       = "10.0.1.0/24"
 # }
 
-resource "azurerm_public_ip" "default" {
-  name                = module.vgw_pip_label.id
-  location            = var.region
-  resource_group_name = "prod-sharedservices-rg"
-  #   resource_group_name = module.vnet.ss_rg_name
-  allocation_method = var.vpngw_allocation_method
-}
+# resource "azurerm_public_ip" "default" {
+#   name                = module.vgw_pip_label.id
+#   location            = var.region
+#   resource_group_name = "prod-sharedservices-rg"
+#   #   resource_group_name = module.vnet.ss_rg_name
+#   allocation_method = var.vpngw_allocation_method
+# }
 
-resource "azurerm_virtual_network_gateway" "default" {
-  name                = module.vgw_label.id
-  location            = var.region
-  resource_group_name = azurerm_public_ip.default.resource_group_name
+# resource "azurerm_virtual_network_gateway" "default" {
+#   name                = module.vgw_label.id
+#   location            = var.region
+#   resource_group_name = azurerm_public_ip.default.resource_group_name
 
-  type     = var.vpngw_type
-  vpn_type = var.vpngw_vpn_type
+#   type     = var.vpngw_type
+#   vpn_type = var.vpngw_vpn_type
 
-  active_active = false
-  enable_bgp    = false
-  sku           = var.vpngw_sku
+#   active_active = false
+#   enable_bgp    = false
+#   sku           = var.vpngw_sku
 
-  ip_configuration {
-    name                          = module.ipconfig_label.id
-    public_ip_address_id          = azurerm_public_ip.default.id
-    private_ip_address_allocation = var.vpngw_private_alloc
-    subnet_id                     = module.vnet.gateway_subnet_id
-  }
+#   ip_configuration {
+#     name                          = module.ipconfig_label.id
+#     public_ip_address_id          = azurerm_public_ip.default.id
+#     private_ip_address_allocation = var.vpngw_private_alloc
+#     subnet_id                     = module.vnet.gateway_subnet_id
+#   }
 
-  vpn_client_configuration {
-    address_space = var.vpngw_client_address
+#   vpn_client_configuration {
+#     address_space = var.vpngw_client_address
 
-  }
-}
+#   }
+# }
 
 # ExpressRoute Gateway
 
