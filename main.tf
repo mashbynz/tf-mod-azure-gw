@@ -25,12 +25,12 @@
 #   address_prefix       = "10.0.1.0/24"
 # }
 
-resource "azurerm_public_ip" "default" {
-  name                = module.vgw_pip_label.id
-  location            = var.region
-  resource_group_name = module.vnet.rg_name
-  allocation_method   = var.vpngw_allocation_method
-}
+# resource "azurerm_public_ip" "default" {
+#   name                = module.vgw_pip_label.id
+#   location            = var.region
+#   resource_group_name = module.vnet.rg_name
+#   allocation_method   = var.vpngw_allocation_method
+# }
 
 # resource "azurerm_virtual_network_gateway" "default" {
 #   name                = module.vgw_label.id
