@@ -2,7 +2,13 @@
 Common Variables: Azure provider - Autoloaded from Terragrunt.
 *****/
 
-variable "region" {
+variable "primaryregion" {
+  description = "The Azure region (e.g. 'australiaeast'). Autoloaded from region.tfvars."
+  type        = string
+  default     = ""
+}
+
+variable "secondaryregion" {
   description = "The Azure region (e.g. 'australiaeast'). Autoloaded from region.tfvars."
   type        = string
   default     = ""
