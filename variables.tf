@@ -54,6 +54,12 @@ variable "vpngw_client_address" {
   default     = []
 }
 
+variable "gateway_vnet_rg_name" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
 /*****
 Label Module Variables
 *****/
