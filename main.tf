@@ -1,6 +1,6 @@
-# module "vnet" {
-#   source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
-# }
+module "vnet" {
+  source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
+}
 
 
 # VPN Gateway
@@ -60,8 +60,8 @@
 
 resource "azurerm_express_route_circuit" "test" {
   name                  = module.ergw_label.id
-  resource_group_name   = vnet.rg_name
-  location              = vnet.rg_location
+  resource_group_name   = vnet.rg_name.id
+  location              = vnet.rg_location.id
   service_provider_name = var.service_provider_name
   peering_location      = var.peering_location
   bandwidth_in_mbps     = var.bandwidth_in_mbps
