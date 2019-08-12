@@ -54,6 +54,24 @@ variable "gateway_vnet_rg_name" {
   default     = ""
 }
 
+variable "service_provider_name" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
+variable "peering_location" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
+variable "bandwidth_in_mbps" {
+  type        = number
+  description = ""
+  default     = 0
+}
+
 /*****
 Label Module Variables
 *****/

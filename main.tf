@@ -1,4 +1,3 @@
-
 # module "vnet" {
 #   source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
 # }
@@ -59,5 +58,38 @@
 
 # ExpressRoute Gateway
 
+resource "azurerm_express_route_circuit" "test" {
+  name                  = module.ergw_label.id
+  resource_group_name   = vnet.rg_name
+  location              = vnet.rg_location
+  service_provider_name = var.service_provider_name
+  peering_location      = var.peering_location
+  bandwidth_in_mbps     = var.bandwidth_in_mbps
+
+  sku {
+    tier   = "Standard"
+    family = "MeteredData"
+  }
+
+  allow_classic_operations = false
+
+  tags = {
+    environment = "Production"
+  }
+}
+
+# resource "azurerm_express_route_circuit_peering" "test" {
+#   peering_type                  = "MicrosoftPeering"
+#   express_route_circuit_name    = "${azurerm_express_route_circuit.test.name}"
+#   resource_group_name           = "${azurerm_resource_group.test.name}"
+#   peer_asn                      = 100
+#   primary_peer_address_prefix   = "123.0.0.0/30"
+#   secondary_peer_address_prefix = "123.0.0.4/30"
+#   vlan_id                       = 300
+
+#   microsoft_peering_config {
+#     advertised_public_prefixes = ["123.1.0.0/24"]
+#   }
+# }
 
 
