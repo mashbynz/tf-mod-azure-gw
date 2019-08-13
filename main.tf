@@ -76,7 +76,7 @@ resource "azurerm_express_route_circuit" "default" {
   tags = module.ergw_label.tags
 }
 
-resource "azurerm_express_route_circuit_authorization" "default" {
+resource "azurerm_express_route_circuit_authorization" "LiquidAuth" {
   name                       = module.ergw_authorisation.id
   express_route_circuit_name = azurerm_express_route_circuit.default.name
   resource_group_name        = var.resource_group_name
