@@ -58,7 +58,7 @@
 
 # ExpressRoute Gateway
 
-resource "azurerm_express_route_circuit" "test" {
+resource "azurerm_express_route_circuit" "default" {
   name                  = module.ergw_label.id
   resource_group_name   = var.resource_group_name
   location              = var.location
@@ -74,6 +74,12 @@ resource "azurerm_express_route_circuit" "test" {
   allow_classic_operations = false
 
   tags = module.ergw_label.tags
+}
+
+resource "azurerm_express_route_circuit_authorization" "default" {
+  name                       = module.ergw_authorisation.id
+  express_route_circuit_name = azurerm_express_route_circuit.default.name
+  resource_group_name        = var.resource_group_name
 }
 
 # resource "azurerm_express_route_circuit_peering" "test" {
