@@ -22,11 +22,3 @@ module "ipconfig_label" {
   delimiter          = "-"
   additional_tag_map = {} /* Additional attributes (e.g. 1) */
 }
-
-module "ergw_label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=0.14.1"
-  context    = var.context
-  attributes = ["ergw"]
-  delimiter  = "-"
-  additional_tag_map = {} /* Additional attributes (e.g. 1) */
-}
