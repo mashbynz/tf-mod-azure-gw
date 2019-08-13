@@ -12,6 +12,18 @@ variable "region" {
 GATEWAY Module Variables - https://github.com/mashbynz/tf-mod-azure-gw
 *****/
 
+variable "resource_group_name" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
+variable "location" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
 variable "vpngw_allocation_method" {
   type        = string
   description = ""
