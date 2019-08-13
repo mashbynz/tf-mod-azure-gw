@@ -96,6 +96,30 @@ variable "family" {
   default     = ""
 }
 
+variable "peering_type" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
+variable "peer_asn" {
+  type        = number
+  description = ""
+  default     = 0
+}
+
+variable "vlan_id" {
+  type        = number
+  description = ""
+  default     = 0
+}
+
+variable "advertised_public_prefixes" {
+  type        = list(string)
+  description = ""
+  default     = []
+}
+
 /*****
 Label Module Variables
 *****/

@@ -82,18 +82,18 @@ resource "azurerm_express_route_circuit_authorization" "LiquidAuth" {
   resource_group_name        = var.resource_group_name
 }
 
-# resource "azurerm_express_route_circuit_peering" "test" {
-#   peering_type                  = "MicrosoftPeering" ##
-#   express_route_circuit_name    = "${azurerm_express_route_circuit.test.name}"
-#   resource_group_name           = "${azurerm_resource_group.test.name}"
-#   peer_asn                      = 100
-#   primary_peer_address_prefix   = "123.0.0.0/30"
-#   secondary_peer_address_prefix = "123.0.0.4/30"
-#   vlan_id                       = 300
+resource "azurerm_express_route_circuit_peering" "default" {
+  peering_type                  = var.peering_type
+  express_route_circuit_name    = azurerm_express_route_circuit.default.name
+  resource_group_name           = var.resource_group_name
+  peer_asn                      = var.peer_asn
+  primary_peer_address_prefix   = var.primary_peer_address_prefix
+  secondary_peer_address_prefix = var.secondary_peer_address_prefix
+  vlan_id                       = var.vlan_id
 
-#   microsoft_peering_config {
-#     advertised_public_prefixes = ["123.1.0.0/24"]
-#   }
-# }
+  microsoft_peering_config {
+    advertised_public_prefixes = var.advertised_public_prefixes
+  }
+}
 
 
