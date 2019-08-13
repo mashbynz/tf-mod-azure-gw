@@ -1,6 +1,6 @@
-module "vnet" {
-  source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
-}
+# module "vnet" {
+#   source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
+# }
 
 
 # VPN Gateway
@@ -60,15 +60,15 @@ module "vnet" {
 
 resource "azurerm_express_route_circuit" "test" {
   name                  = module.ergw_label.id
-  resource_group_name   = vnet.rg_name.id
-  location              = vnet.rg_location.id
+  resource_group_name   = var.resource_group_name
+  location              = var.location
   service_provider_name = var.service_provider_name
   peering_location      = var.peering_location
   bandwidth_in_mbps     = var.bandwidth_in_mbps
 
   sku {
     tier   = "Standard"
-    family = "MeteredData"
+    family = "UnlimitedData"
   }
 
   allow_classic_operations = false
@@ -79,7 +79,7 @@ resource "azurerm_express_route_circuit" "test" {
 }
 
 # resource "azurerm_express_route_circuit_peering" "test" {
-#   peering_type                  = "MicrosoftPeering"
+#   peering_type                  = "MicrosoftPeering" ##
 #   express_route_circuit_name    = "${azurerm_express_route_circuit.test.name}"
 #   resource_group_name           = "${azurerm_resource_group.test.name}"
 #   peer_asn                      = 100
