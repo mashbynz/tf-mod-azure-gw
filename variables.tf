@@ -84,6 +84,18 @@ variable "bandwidth_in_mbps" {
   default     = 0
 }
 
+variable "tier" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
+variable "family" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
 /*****
 Label Module Variables
 *****/

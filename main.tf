@@ -67,15 +67,13 @@ resource "azurerm_express_route_circuit" "test" {
   bandwidth_in_mbps     = var.bandwidth_in_mbps
 
   sku {
-    tier   = "Standard"
-    family = "UnlimitedData"
+    tier   = var.tier
+    family = var.family
   }
 
   allow_classic_operations = false
 
-  tags = {
-    environment = "Production"
-  }
+  tags = module.ergw_label.tags
 }
 
 # resource "azurerm_express_route_circuit_peering" "test" {
