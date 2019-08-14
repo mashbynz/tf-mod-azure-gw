@@ -60,7 +60,8 @@ resource "azurerm_virtual_network_gateway" "default" {
 }
 
 resource "azurerm_express_route_circuit" "default" {
-  name                  = module.ergw_label.id
+  count                 = var.enabled ? length(var.peering_location) : 0
+  name                  = "${module.ergw_label.id}-${element(var.peering_location, count.index)}"
   resource_group_name   = var.resource_group_name
   location              = var.location
   service_provider_name = var.service_provider_name
@@ -92,7 +93,7 @@ resource "azurerm_express_route_circuit" "default" {
 #   secondary_peer_address_prefix = var.secondary_peer_address_prefix
 #   vlan_id                       = var.vlan_id
 
-#   microsoft_peering_config {
+#   microsoft_peering_config {w
 #     advertised_public_prefixes = var.advertised_public_prefixes
 #   }
 # }
