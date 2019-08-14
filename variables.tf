@@ -18,37 +18,43 @@ variable "resource_group_name" {
   default     = ""
 }
 
+variable "gateway_subnet_id" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
 variable "location" {
   type        = string
   description = ""
   default     = ""
 }
 
-variable "vpngw_allocation_method" {
+variable "ergw_allocation_method" {
   type        = string
   description = ""
   default     = ""
 }
 
-variable "vpngw_type" {
+variable "ergw_ip_sku" {
   type        = string
   description = ""
   default     = ""
 }
 
-variable "vpngw_vpn_type" {
+variable "ergw_type" {
   type        = string
   description = ""
   default     = ""
 }
 
-variable "vpngw_sku" {
+variable "ergw_sku" {
   type        = string
   description = ""
   default     = ""
 }
 
-variable "vpngw_private_alloc" {
+variable "ergw_private_alloc" {
   type        = string
   description = ""
   default     = ""

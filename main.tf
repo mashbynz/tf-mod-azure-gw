@@ -31,32 +31,33 @@
 #   allocation_method   = var.vpngw_allocation_method
 # }
 
-# resource "azurerm_virtual_network_gateway" "default" {
-#   name                = module.vgw_label.id
-#   location            = var.region
-#   resource_group_name = azurerm_public_ip.default.resource_group_name
-
-#   type     = var.vpngw_type
-#   vpn_type = var.vpngw_vpn_type
-
-#   active_active = false
-#   enable_bgp    = false
-#   sku           = var.vpngw_sku
-
-#   ip_configuration {
-#     name                          = module.ipconfig_label.id
-#     public_ip_address_id          = azurerm_public_ip.default.id
-#     private_ip_address_allocation = var.vpngw_private_alloc
-#     subnet_id                     = module.vnet.gateway_subnet_id
-#   }
-
-#   vpn_client_configuration {
-#     address_space = var.vpngw_client_address
-
-#   }
-# }
-
 # ExpressRoute Gateway
+
+resource "azurerm_public_ip" "default" {
+  name                = module.ergw_pip_label.id
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  allocation_method   = var.ergw_allocation_method
+  sku                 = var.ergw_ip_sku
+  tags                = module.ergw_pip_label.tags
+}
+
+resource "azurerm_virtual_network_gateway" "default" {
+  name                = module.er_label.id
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  type = var.ergw_type
+
+  sku = var.ergw_sku
+
+  ip_configuration {
+    name                          = module.ipconfig_label.id
+    public_ip_address_id          = azurerm_public_ip.default.id
+    private_ip_address_allocation = var.ergw_private_alloc
+    subnet_id                     = var.gateway_subnet_id
+  }
+}
 
 resource "azurerm_express_route_circuit" "default" {
   name                  = module.ergw_label.id
