@@ -108,6 +108,18 @@ variable "peer_asn" {
   default     = 0
 }
 
+variable "primary_peer_address_prefix" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
+variable "secondary_peer_address_prefix" {
+  type        = string
+  description = ""
+  default     = ""
+}
+
 variable "vlan_id" {
   type        = number
   description = ""
