@@ -83,18 +83,18 @@ resource "azurerm_express_route_circuit" "default" {
 #   resource_group_name        = var.resource_group_name
 # }
 
-resource "azurerm_express_route_circuit_peering" "default" {
-  peering_type                  = var.peering_type
-  express_route_circuit_name    = azurerm_express_route_circuit.default.name
-  resource_group_name           = var.resource_group_name
-  peer_asn                      = var.peer_asn
-  primary_peer_address_prefix   = var.primary_peer_address_prefix
-  secondary_peer_address_prefix = var.secondary_peer_address_prefix
-  vlan_id                       = var.vlan_id
+# resource "azurerm_express_route_circuit_peering" "default" {
+#   peering_type                  = var.peering_type
+#   express_route_circuit_name    = azurerm_express_route_circuit.default.name
+#   resource_group_name           = var.resource_group_name
+#   peer_asn                      = var.peer_asn
+#   primary_peer_address_prefix   = var.primary_peer_address_prefix
+#   secondary_peer_address_prefix = var.secondary_peer_address_prefix
+#   vlan_id                       = var.vlan_id
 
-  microsoft_peering_config {
-    advertised_public_prefixes = var.advertised_public_prefixes
-  }
-}
+#   microsoft_peering_config {
+#     advertised_public_prefixes = var.advertised_public_prefixes
+#   }
+# }
 
 
