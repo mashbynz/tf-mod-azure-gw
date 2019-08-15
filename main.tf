@@ -84,6 +84,7 @@ resource "azurerm_express_route_circuit" "default" {
 #   resource_group_name        = var.resource_group_name
 # }
 
+# Callum
 # resource "azurerm_express_route_circuit_peering" "default" {
 #   peering_type                  = var.peering_type
 #   express_route_circuit_name    = azurerm_express_route_circuit.default.name
@@ -95,7 +96,12 @@ resource "azurerm_express_route_circuit" "default" {
 
 #   microsoft_peering_config {w
 #     advertised_public_prefixes = var.advertised_public_prefixes
+
+# Registry Routing parameter required here https://github.com/terraform-providers/terraform-provider-azurerm/issues/1084
+
 #   }
 # }
+
+# No Route Filters in Terraform https://github.com/terraform-providers/terraform-provider-azurerm/issues/1083
 
 
