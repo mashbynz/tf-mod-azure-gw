@@ -37,112 +37,50 @@ variable "location" {
   default     = ""
 }
 
-variable "ergw_allocation_method" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "ergw_ip_sku" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "ergw_type" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "ergw_sku" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "ergw_private_alloc" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "vpngw_client_address" {
-  type        = list(string)
-  description = ""
-  default     = []
-}
-
-variable "gateway_vnet_rg_name" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "service_provider_name" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "peering_location" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "bandwidth_in_mbps" {
-  type        = number
-  description = ""
-  default     = 0
-}
-
-variable "tier" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "family" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "peering_type" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "peer_asn" {
-  type        = number
-  description = ""
-  default     = 0
-}
-
-variable "primary_peer_address_prefix" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "secondary_peer_address_prefix" {
-  type        = string
-  description = ""
-  default     = ""
-}
-
-variable "vlan_id" {
-  type        = number
-  description = ""
-  default     = 0
-}
-
-variable "advertised_public_prefixes" {
-  type        = list(string)
-  description = ""
-  default     = []
+variable "express_route_config" {
+  type = object({
+    regions                       = map(string)
+    enabled                       = bool
+    primary_peer_address_prefix   = list(string)
+    secondary_peer_address_prefix = list(string)
+    advertised_public_prefixes = object({
+      ae  = list(string)
+      ase = list(string)
+    })
+    peering_location        = map(string)
+    provider_name           = map(string)
+    bandwidth_in_mbps       = map(string)
+    tier                    = string
+    family                  = string
+    peering_type            = string
+    peer_asn                = number
+    vlan_id                 = number
+    ergw_allocation_method  = string
+    ergw_ip_sku             = string
+    ergw_type               = string
+    ergw_sku                = string
+    ergw_private_allocation = string
+  })
+  default = {
+    enabled                       = true
+    primary_peer_address_prefix   = []
+    secondary_peer_address_prefix = []
+    advertised_public_prefixes    = {}
+    peering_location              = {}
+    provider_name                 = {}
+    bandwidth_in_mbps             = {}
+    tier                          = ""
+    family                        = ""
+    peering_type                  = ""
+    peer_asn                      = null
+    vlan_id                       = null
+    ergw_allocation_method        = ""
+    ergw_ip_sku                   = ""
+    ergw_type                     = ""
+    ergw_sku                      = ""
+    ergw_private_allocation       = ""
+  }
+  description = "Default express route configuration"
 }
 
 /*****
