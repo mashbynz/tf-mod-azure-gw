@@ -20,26 +20,20 @@ GATEWAY Module Variables - https://github.com/mashbynz/tf-mod-azure-gw
 *****/
 
 variable "resource_group_name" {
-  type        = string
+  type        = list(string)
   description = ""
-  default     = ""
+  default     = []
 }
 
 variable "gateway_subnet_id" {
-  type        = string
+  type        = list(string)
   description = ""
-  default     = ""
-}
-
-variable "location" {
-  type        = string
-  description = ""
-  default     = ""
+  default     = []
 }
 
 variable "express_route_config" {
   type = object({
-    location                       = map(string)
+    location                      = map(string)
     enabled                       = bool
     primary_peer_address_prefix   = list(string)
     secondary_peer_address_prefix = list(string)

@@ -35,48 +35,60 @@
 
 resource "azurerm_public_ip" "default" {
   name                = module.ergw_pip_label.id
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  allocation_method   = var.ergw_allocation_method
-  sku                 = var.ergw_ip_sku
+  location            = lookup(var.express_route_config.location, "*", "", count.index)
+  resource_group_name = element(var.resource_group_name, count.index)
+  allocation_method   = var.express_route_config.ergw_allocation_method
+  sku                 = var.express_route_config.ergw_sku
   tags                = module.ergw_pip_label.tags
 }
 
-resource "azurerm_virtual_network_gateway" "default" {
-  name                = module.er_label.id
-  location            = var.location
-  resource_group_name = var.resource_group_name
+# resource "azurerm_virtual_network_gateway" "default" {
+#   name                = module.er_label.id
+#   location            = lookup(var.express_route_config.location, "*", "", count.index)
+#   resource_group_name = element(var.resource_group_name, count.index)
 
-  type = var.ergw_type
+#   type = var.express_route_config.ergw_type
+#   sku  = var.express_route_config.ergw_sku
 
-  sku = var.ergw_sku
+#   ip_configuration {
+#     name                          = module.ipconfig_label.id
+#     public_ip_address_id          = azurerm_public_ip.default.id
+#     private_ip_address_allocation = var.var.express_route_config.ergw_private_allocation
+#     subnet_id                     = var.gateway_subnet_id
+#   }
+# }
 
-  ip_configuration {
-    name                          = module.ipconfig_label.id
-    public_ip_address_id          = azurerm_public_ip.default.id
-    private_ip_address_allocation = var.ergw_private_alloc
-    subnet_id                     = var.gateway_subnet_id
-  }
-}
+# resource "azurerm_express_route_circuit" "default" {
+#   count                 = var.enabled ? length(var.express_route_config.peering_location) : 0
+#   name                  = "${module.ergw_label.id}-${element(lookup(var.express_route_config.peering_location, count.index))}"
+#   resource_group_name   = var.resource_group_name
+#   location              = var.location
+#   service_provider_name = var.service_provider_name
+#   peering_location      = var.peering_location
+#   bandwidth_in_mbps     = var.bandwidth_in_mbps
 
-resource "azurerm_express_route_circuit" "default" {
-  count                 = var.enabled ? length(var.peering_location) : 0
-  name                  = "${module.ergw_label.id}-${element(var.peering_location, count.index)}"
-  resource_group_name   = var.resource_group_name
-  location              = var.location
-  service_provider_name = var.service_provider_name
-  peering_location      = var.peering_location
-  bandwidth_in_mbps     = var.bandwidth_in_mbps
+#   sku {
+#     tier   = var.tier
+#     family = var.family
+#   }
 
-  sku {
-    tier   = var.tier
-    family = var.family
-  }
+#   allow_classic_operations = false
 
-  allow_classic_operations = false
+#   tags = module.ergw_label.tags
+# }
 
-  tags = module.ergw_label.tags
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 # resource "azurerm_express_route_circuit_authorization" "LiquidAuth" {
 #   name                       = module.ergw_authorisation.id
