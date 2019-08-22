@@ -34,6 +34,7 @@
 # ExpressRoute Gateway
 
 resource "azurerm_public_ip" "default" {
+  count               = var.enabled == true ? length(var.peering_location) : 0
   name                = module.ergw_pip_label.id
   location            = lookup(var.express_route_config.location, "*", "", count.index)
   resource_group_name = element(var.resource_group_name, count.index)
