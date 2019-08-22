@@ -56,6 +56,7 @@ variable "express_route_config" {
     ergw_private_allocation = string
   })
   default = {
+    location                      = {}
     enabled                       = true
     primary_peer_address_prefix   = []
     secondary_peer_address_prefix = []
