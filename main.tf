@@ -56,7 +56,7 @@ resource "azurerm_virtual_network_gateway" "default" {
     name                          = module.ipconfig_label.id
     public_ip_address_id          = element(azurerm_public_ip.default.*.id, count.index)
     private_ip_address_allocation = var.express_route_config.ergw_private_allocation
-    subnet_id                     = var.gateway_subnet_id
+    subnet_id                     = element(var.gateway_subnet_id, count.index)
   }
 }
 
