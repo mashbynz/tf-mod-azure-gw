@@ -43,21 +43,22 @@ resource "azurerm_public_ip" "default" {
   tags                = module.ergw_pip_label.tags
 }
 
-# resource "azurerm_virtual_network_gateway" "default" {
-#   name                = module.er_label.id
-#   location            = lookup(var.express_route_config.location, "*", "", count.index)
-#   resource_group_name = element(var.resource_group_name, count.index)
+resource "azurerm_virtual_network_gateway" "default" {
+  count               = var.enabled == true ? length(var.express_route_config.peering_location) : 0
+  name                = module.er_label.id
+  location            = element(values(var.express_route_config.location), count.index)
+  resource_group_name = element(var.resource_group_name, count.index)
 
-#   type = var.express_route_config.ergw_type
-#   sku  = var.express_route_config.ergw_sku
+  type = var.express_route_config.ergw_type
+  sku  = var.express_route_config.ergw_sku
 
-#   ip_configuration {
-#     name                          = module.ipconfig_label.id
-#     public_ip_address_id          = azurerm_public_ip.default.id
-#     private_ip_address_allocation = var.var.express_route_config.ergw_private_allocation
-#     subnet_id                     = var.gateway_subnet_id
-#   }
-# }
+  ip_configuration {
+    name                          = module.ipconfig_label.id
+    public_ip_address_id          = element(azurerm_public_ip.default.*.id, count.index)
+    private_ip_address_allocation = var.express_route_config.ergw_private_allocation
+    subnet_id                     = var.gateway_subnet_id
+  }
+}
 
 # resource "azurerm_express_route_circuit" "default" {
 #   count                 = var.enabled ? length(var.express_route_config.peering_location) : 0
