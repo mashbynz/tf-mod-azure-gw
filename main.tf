@@ -35,7 +35,7 @@
 
 resource "azurerm_public_ip" "default" {
   count               = var.enabled == true ? length(var.express_route_config.peering_location) : 0
-  name                = module.ergw_pip_label.id
+  name                = "${format("%s%s%s%s%s", module.ergw_pip_label.id, var.delimiter, element(keys(var.express_route_config.peering_location), count.index), var.delimiter, element(module.ergw_pip_label.attributes, count.index))}"
   location            = element(values(var.express_route_config.location), count.index)
   resource_group_name = element(var.resource_group_name, count.index)
   allocation_method   = var.express_route_config.ergw_allocation_method
