@@ -44,7 +44,7 @@ resource "azurerm_public_ip" "default" {
 }
 
 resource "azurerm_virtual_network_gateway" "default" {
-  count               = var.enabled == true ? length(var.express_route_config.peering_location) : 0
+  count               = var.enabled == true ? length(values(var.express_route_config.peering_location)) : 0
   name                = module.er_label.id
   location            = element(values(var.express_route_config.location), count.index)
   resource_group_name = element(var.resource_group_name, count.index)
