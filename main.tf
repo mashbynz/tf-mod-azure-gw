@@ -65,7 +65,7 @@ resource "azurerm_express_route_circuit" "default" {
   name                  = "${module.ergw_label.id}${module.ergw_label.delimiter}${element(keys(var.express_route_config.peering_location), count.index)}${module.ergw_label.delimiter}${element(module.ergw_label.attributes, count.index)}"
   location              = element(values(var.express_route_config.location), count.index)
   resource_group_name   = element(var.resource_group_name, count.index)
-  service_provider_name = var.express_route_config.provider_name
+  service_provider_name = element(values(var.express_route_config.provider_name), count.index)
   peering_location      = element(values(var.express_route_config.peering_location), count.index)
   bandwidth_in_mbps     = element(values(var.express_route_config.bandwidth_in_mbps), count.index)
 
