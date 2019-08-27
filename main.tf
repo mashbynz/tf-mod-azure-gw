@@ -39,7 +39,7 @@ resource "azurerm_public_ip" "default" {
   location            = element(values(var.express_route_config.location), count.index)
   resource_group_name = element(var.resource_group_name, count.index)
   allocation_method   = var.express_route_config.ergw_allocation_method
-  sku                 = var.express_route_config.ergw_sku
+  sku                 = var.express_route_config.ergw_ip_sku
   tags                = module.ergw_pip_label.tags
 }
 
