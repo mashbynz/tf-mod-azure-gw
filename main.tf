@@ -1,36 +1,3 @@
-# module "vnet" {
-#   source = "git::https://github.com/mashbynz/tf-mod-azure-vnet.git?ref=master"
-# }
-
-
-# VPN Gateway
-
-# resource "azurerm_resource_group" "test" {
-#   name     = "test"
-#   location = "West US"
-# }
-
-# resource "azurerm_virtual_network" "test" {
-#   name                = "test"
-#   location            = "${azurerm_resource_group.test.location}"
-#   resource_group_name = "${azurerm_resource_group.test.name}"
-#   address_space       = ["10.0.0.0/16"]
-# }
-
-# resource "azurerm_subnet" "test" {
-#   name                 = "GatewaySubnet"
-#   resource_group_name  = "${azurerm_resource_group.test.name}"
-#   virtual_network_name = "${azurerm_virtual_network.test.name}"
-#   address_prefix       = "10.0.1.0/24"
-# }
-
-# resource "azurerm_public_ip" "default" {
-#   name                = module.vgw_pip_label.id
-#   location            = var.region
-#   resource_group_name = module.vnet.rg_name
-#   allocation_method   = var.vpngw_allocation_method
-# }
-
 # ExpressRoute Gateway
 
 resource "azurerm_public_ip" "default" {
@@ -79,11 +46,12 @@ resource "azurerm_express_route_circuit" "default" {
   tags = module.ergw_label.tags
 }
 
-# resource "azurerm_express_route_circuit_authorization" "LiquidAuth" {
-#   name                       = module.ergw_authorisation.id
-#   express_route_circuit_name = azurerm_express_route_circuit.default.*.name[count.index]
-#   resource_group_name        = var.resource_group_name
-# }
+resource "azurerm_express_route_circuit_authorization" "LiquidAuth" {
+  count                      = var.enabled ? length(var.express_route_config.peering_location) : 0
+  name                       = module.ergw_authorisation.id
+  express_route_circuit_name = azurerm_express_route_circuit.default.*.name[count.index]
+  resource_group_name        = element(var.resource_group_name, count.index)
+}
 
 # Callum
 # resource "azurerm_express_route_circuit_peering" "default" {
