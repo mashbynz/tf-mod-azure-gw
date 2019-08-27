@@ -60,41 +60,28 @@ resource "azurerm_virtual_network_gateway" "default" {
   }
 }
 
-# resource "azurerm_express_route_circuit" "default" {
-#   count                 = var.enabled ? length(var.express_route_config.peering_location) : 0
-#   name                  = "${module.ergw_label.id}-${element(lookup(var.express_route_config.peering_location, count.index))}"
-#   resource_group_name   = var.resource_group_name
-#   location              = var.location
-#   service_provider_name = var.service_provider_name
-#   peering_location      = var.peering_location
-#   bandwidth_in_mbps     = var.bandwidth_in_mbps
+resource "azurerm_express_route_circuit" "default" {
+  count                 = var.enabled ? length(var.express_route_config.peering_location) : 0
+  name                  = "${module.ergw_label.id}${module.ergw_label.delimiter}${element(keys(var.express_route_config.peering_location), count.index)}${module.ergw_label.delimiter}${element(module.ergw_label.attributes, count.index)}"
+  location              = element(values(var.express_route_config.location), count.index)
+  resource_group_name   = element(var.resource_group_name, count.index)
+  service_provider_name = var.express_route_config.provider_name
+  peering_location      = element(values(var.express_route_config.peering_location), count.index)
+  bandwidth_in_mbps     = element(values(var.express_route_config.bandwidth_in_mbps), count.index)
 
-#   sku {
-#     tier   = var.tier
-#     family = var.family
-#   }
+  sku {
+    tier   = var.express_route_config.tier
+    family = var.express_route_config.family
+  }
 
-#   allow_classic_operations = false
+  allow_classic_operations = false
 
-#   tags = module.ergw_label.tags
-# }
-
-
-
-
-
-
-
-
-
-
-
-
-
+  tags = module.ergw_label.tags
+}
 
 # resource "azurerm_express_route_circuit_authorization" "LiquidAuth" {
 #   name                       = module.ergw_authorisation.id
-#   express_route_circuit_name = azurerm_express_route_circuit.default.name
+#   express_route_circuit_name = azurerm_express_route_circuit.default.*.name[count.index]
 #   resource_group_name        = var.resource_group_name
 # }
 
