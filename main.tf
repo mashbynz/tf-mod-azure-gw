@@ -2,7 +2,7 @@
 
 resource "azurerm_public_ip" "default" {
   count = var.enabled == true ? length(var.express_route_config.peering_location) : 0
-  name  = "${element(keys(var.vnet_config.location), count.index)}${var.sharedservices_name}${module.ergw_pip_label.delimiter}${element(module.ergw_pip_label.attributes, 0)}${length(keys(var.vnet_config.location))}"
+  name  = "${element(keys(var.express_route_config.peering_location), count.index)}${var.sharedservices_name}${module.ergw_pip_label.delimiter}${element(module.ergw_pip_label.attributes, 0)}${length(keys(var.express_route_config.peering_location))}"
   # name                = "${format("%s%s%s%s%s", module.ergw_pip_label.id, var.delimiter, element(keys(var.express_route_config.peering_location), count.index), var.delimiter, element(module.ergw_pip_label.attributes, count.index))}"
   location            = element(values(var.express_route_config.location), count.index)
   resource_group_name = element(var.resource_group_name, count.index)
@@ -13,7 +13,7 @@ resource "azurerm_public_ip" "default" {
 
 resource "azurerm_virtual_network_gateway" "default" {
   count = var.enabled == true ? length(keys(var.express_route_config.peering_location)) : 0
-  name  = "${element(keys(var.vnet_config.location), count.index)}${var.sharedservices_name}${module.er_label.delimiter}${element(module.er_label.attributes, 0)}${length(keys(var.vnet_config.location))}"
+  name  = "${element(keys(var.express_route_config.peering_location), count.index)}${var.sharedservices_name}${module.er_label.delimiter}${element(module.er_label.attributes, 0)}${length(keys(var.express_route_config.peering_location))}"
   # name                = "${module.er_label.id}${var.delimiter}${element(keys(var.express_route_config.peering_location), count.index)}${var.delimiter}${element(module.er_label.attributes, count.index)}"
   location            = element(values(var.express_route_config.location), count.index)
   resource_group_name = element(var.resource_group_name, count.index)
@@ -31,7 +31,7 @@ resource "azurerm_virtual_network_gateway" "default" {
 
 resource "azurerm_express_route_circuit" "default" {
   count = var.enabled == true ? length(var.express_route_config.peering_location) : 0
-  name  = "${element(keys(var.vnet_config.location), count.index)}${var.sharedservices_name}${module.ergw_label.delimiter}${element(module.ergw_label.attributes, 0)}${length(keys(var.vnet_config.location))}"
+  name  = "${element(keys(var.express_route_config.peering_location), count.index)}${var.sharedservices_name}${module.ergw_label.delimiter}${element(module.ergw_label.attributes, 0)}${length(keys(var.express_route_config.peering_location))}"
   # name                  = "${module.ergw_label.id}${module.ergw_label.delimiter}${element(keys(var.express_route_config.peering_location), count.index)}${module.ergw_label.delimiter}${element(module.ergw_label.attributes, count.index)}"
   location              = element(values(var.express_route_config.location), count.index)
   resource_group_name   = element(var.resource_group_name, count.index)
