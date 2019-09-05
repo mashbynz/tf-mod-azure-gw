@@ -31,6 +31,12 @@ variable "gateway_subnet_id" {
   default     = []
 }
 
+variable "sharedservices_name" {
+  type        = string
+  default     = ""
+  description = "Solution name, e.g. 'app' or 'jenkins'"
+}
+
 variable "express_route_config" {
   type = object({
     location                      = map(string)
