@@ -22,7 +22,8 @@ resource "azurerm_virtual_network_gateway" "default" {
   sku  = var.express_route_config.ergw_sku
 
   ip_configuration {
-    name                          = module.ipconfig_label.id
+    # name                          = module.ipconfig_label.id
+    name                          = "${element(keys(var.express_route_config.peering_location), count.index)}${var.sharedservices_name}"
     public_ip_address_id          = element(azurerm_public_ip.default.*.id, count.index)
     private_ip_address_allocation = var.express_route_config.ergw_private_allocation
     subnet_id                     = element(var.gateway_subnet_id, count.index)
